@@ -1,0 +1,22 @@
+version: '2'
+services:
+  db:
+    image: mysql:5.7
+    ports:
+      - '3366:3306'
+    volumes:
+      - ./db/mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tokumei_diary
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+  web:
+      build: ./docker/web
+      ports:
+        - '8080:80'
+      working_dir: /var/www/html
+      volumes:
+        - ./ci:/var/www/html
+      depends_on:
+        - db
